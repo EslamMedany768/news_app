@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'categories/categories/Category_Fragment/category_fragment.dart';
-import 'categories/categories/categories_details.dart';
-import 'categories/news/news_Widget.dart';
+import 'categories/categories/cubit/source_details_view.dart';
+import 'categories/news/cubit/news_Widget.dart';
 import 'drawer/drawer.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
               : SizedBox(),
           category == null
               ? CategoryFragment(onCardClicked: onCardClicked)
-              : CategoriesDetails(category: category!),
+              : SourceDetailsView(category: category!),
         ],
       ),
     );

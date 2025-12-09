@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/model/sourcesRespone.dart';
-import 'package:news_app/ui/home/categories/news/news_Widget.dart';
+import 'package:news_app/ui/home/categories/news/cubit/news_Widget.dart';
 import 'package:news_app/utils/AppColors.dart';
 
 import 'TabNameWidget.dart';
