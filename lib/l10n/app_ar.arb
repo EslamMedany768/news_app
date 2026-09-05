@@ -1,0 +1,23 @@
+{
+"news_app":"الاخبار",
+"go_to_home":"الذهاب الي الرئيسية",
+"theme":"السمات",
+"light":"مضئ",
+"dark":"مظلم",
+"language":"اللغة",
+"arabic":"العربية",
+"english":"الانجليزية",
+"good_morning":"صباح الخير",
+"here_is_Some_News_For_You":"اخبار لك",
+"general":"عام",
+"business":"التجارة",
+"view_all":"اظهار الكل",
+"entertainment":"الترفية",
+"health":"الصحة",
+"science":"العلوم",
+"technology":"التكنلوجيا",
+"sports":"الرياضة",
+"home":"الرئيسية",
+"view_full_article":"عرض المقال كامل"
+
+}

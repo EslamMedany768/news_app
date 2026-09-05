@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/model/sourcesRespone.dart';
-import 'package:news_app/ui/home/categories/news/news_Widget.dart';
+import 'package:news_app/ui/home/categories/news/cubit/news_Widget.dart';
 import 'package:news_app/utils/AppColors.dart';
 
 import 'TabNameWidget.dart';
@@ -19,8 +19,8 @@ class _CustomTabBarState extends State<CustomTabBar> {
 
   @override
   Widget build(BuildContext context) {
-    var height=MediaQuery.of(context).size.height;
-    var width=MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
     return DefaultTabController(
       length: widget.sourcesList!.length,
       child: Column(
@@ -28,6 +28,7 @@ class _CustomTabBarState extends State<CustomTabBar> {
           TabBar(
             onTap: (value) {
               selectedIndex = value;
+              print(selectedIndex);
               setState(() {});
             },
 
@@ -42,10 +43,13 @@ class _CustomTabBarState extends State<CustomTabBar> {
               );
             }).toList(),
           ),
-          SizedBox(height: height*0.0114,),
+          SizedBox(height: height * 0.0114),
           SizedBox(
-            height: height*0.850,
-            child: NewsWidget(source: widget.sourcesList![selectedIndex]),
+            height: height * 0.850,
+            child: NewsWidget(
+              key: ValueKey(widget.sourcesList![selectedIndex].id),
+              source: widget.sourcesList![selectedIndex],
+            ),
           ),
         ],
       ),
