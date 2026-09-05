@@ -6,8 +6,8 @@ class NewsRepositoryImpl implements NewsRepository{
   NewsRemoteDataSource dataSource;
   NewsRepositoryImpl({required this.dataSource});
   @override
-  Future<NewsResponse?> getNewsBySourceId(String sourceId) async{
-    var response=await dataSource.getNewsBySourceId(sourceId);
+  Future<NewsResponse?> getNewsBySourceId(String sourceId,int page) async{
+    var response=await dataSource.getNewsBySourceId(sourceId,page);
     return response;
 
   }

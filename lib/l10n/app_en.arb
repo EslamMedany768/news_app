@@ -1,0 +1,22 @@
+{
+"news_app":"News App",
+"go_to_home":"Go To Home",
+"theme":"Theme",
+"light":"Light",
+"dark":"Dark",
+"language":"Language",
+"arabic":"Arabic",
+"english":"English",
+"good_morning":"Good Morning",
+"here_is_Some_News_For_You":"Here is Some News For You",
+"general":"General",
+"business":"Business",
+"view_all":"View All",
+"entertainment":"Entertainment",
+"health":"Health",
+"science":"Science",
+"technology":"Technology",
+"sports":"Sports",
+"home":"Home",
+"view_full_article":"View Full Article"
+}

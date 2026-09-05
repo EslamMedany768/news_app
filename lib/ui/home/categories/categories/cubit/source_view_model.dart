@@ -14,18 +14,20 @@ class SourceViewModel extends Cubit<SourceState> {
   late ApiManager apiManager;
   late SourceRemoteDataSources dataSources;
   late SourceRepository sourceRepository;
-  SourceViewModel() : super(SourceLoadingState()){
-    apiManager= ApiManager();
-    dataSources=SourceRemoteDataSourcesImpl(apiManager: apiManager);
-    sourceRepository=SourceRepositoryImpl(dataSources: dataSources);
 
+  SourceViewModel() : super(SourceLoadingState()) {
+    apiManager = ApiManager();
+    dataSources = SourceRemoteDataSourcesImpl(apiManager: apiManager);
+    sourceRepository = SourceRepositoryImpl(dataSources: dataSources);
   }
 
   void getSourcesCategories(String categoryId) async {
     try {
       emit(SourceLoadingState());
       var response = await sourceRepository.getSources(categoryId);
+
       if (response!.status == "error") {
+        print("error");
         emit(SourceErrorState(errorMessage: response.message!));
         return;
       } else if (response.status == "ok") {

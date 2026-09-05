@@ -11,25 +11,34 @@ class NewsViewModel extends Cubit<NewsState> {
   late NewsRepository newsRepository;
   late NewsRemoteDataSource dataSource;
   late ApiManager apiManager;
+  var NewsList = [];
+
   NewsViewModel() : super(NewsLoadingState()){
     apiManager=ApiManager();
     dataSource = NewsRemoteDataSourceImpl(apiManager: apiManager);
     newsRepository=NewsRepositoryImpl(dataSource: dataSource);
   }
 
-  void getNews(String sourceId) async {
+  void getNews(String sourceId,int page) async {
 
     try {
-      emit(NewsLoadingState());
-      var response = await newsRepository.getNewsBySourceId(sourceId);
+      // emit(NewsLoadingState());
+
+      var response = await newsRepository.getNewsBySourceId(sourceId,page);
       if (response!.status == "ok") {
+
+
         emit(NewsSuccessState(newsList: response.articles!));
+        print(response.articles);
         return;
       } else if (response.status == "error") {
+        print("error");
+
         emit(NewsErrorState(errorMessage: response.message!));
         return;
       }
     } catch (e) {
+
       emit(NewsErrorState(errorMessage: e.toString()));
     }
   }

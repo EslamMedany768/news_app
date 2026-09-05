@@ -9,10 +9,10 @@ import 'package:news_app/ui/home/categories/news/cubit/news_states.dart';
 import 'package:news_app/ui/home/categories/news/cubit/news_view_model.dart';
 import 'package:news_app/utils/AppColors.dart';
 
+import '../../../../../l10n/app_localizations.dart';
 import 'card_news.dart';
 
 class NewsWidget extends StatefulWidget {
-  NewsViewModel viewModel = NewsViewModel();
   Sources source;
 
   NewsWidget({super.key, required this.source});
@@ -22,40 +22,62 @@ class NewsWidget extends StatefulWidget {
 }
 
 class _NewsWidgetState extends State<NewsWidget> {
+
+  int page = 1;
+  NewsViewModel viewModel = NewsViewModel();
+
+
   @override
   void initState() {
     // TODO: implement initState
-    widget.viewModel.getNews(widget.source.id!);
+    print("sourceId is : ${widget.source.id}");
+    viewModel.getNews(widget.source.id!, page);
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     return BlocBuilder<NewsViewModel, NewsState>(
-      bloc: widget.viewModel,
+      bloc: viewModel,
       builder: (context, state) {
         if (state is NewsSuccessState) {
+          viewModel.NewsList.addAll(state.newsList);
+          state.newsList.clear();
+
           return ListView.builder(
-            itemCount: state.newsList.length,
+            itemCount: viewModel.NewsList.length + 1,
             itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () {
-                  modalBottomSheet(
-                    height: height,
-                    source: state.newsList[index],
-                  );
-                },
-                child: CardNews(source: state.newsList[index]),
-              );
+              if (index < viewModel.NewsList.length)
+                return InkWell(
+                  onTap: () {
+                    modalBottomSheet(height: height, source: viewModel.NewsList[index]);
+                  },
+                  child: CardNews(source: viewModel.NewsList[index]),
+                );
+              else if (viewModel.NewsList.isEmpty) {
+                return Column(children: [Text("this source is empty")]);
+              } else {
+                page++;
+                viewModel.getNews(widget.source.id!, page);
+                return Center(
+                  child: CircularProgressIndicator(color: AppColors.black),
+                );
+              }
             },
           );
         } else if (state is NewsErrorState) {
-          Text(
+          return Text(
             state.errorMessage,
             style: Theme.of(context).textTheme.titleLarge,
           );
+        } else if (state is NewsLoadingState && viewModel.NewsList.isEmpty) {
+          return Center(
+            child: CircularProgressIndicator(color: AppColors.black),
+          );
+        } else {
+          return Container();
         }
-        return Center(child: CircularProgressIndicator(color: AppColors.black));
       },
     );
   }
@@ -145,7 +167,7 @@ class _NewsWidgetState extends State<NewsWidget> {
                     ),
                     onPressed: () {},
                     child: Text(
-                      "View Full Articel",
+                      AppLocalizations.of(context)!.view_full_article,
                       style: Theme.of(context).textTheme.titleSmall!.copyWith(
                         color: Theme.of(context).scaffoldBackgroundColor,
                       ),
